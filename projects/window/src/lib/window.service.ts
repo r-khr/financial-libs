@@ -1,20 +1,38 @@
-import { InjectionToken } from '@angular/core';
-import { PlatformService } from './platform.service';
+import { InjectionToken, Injectable, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 
-export const WINDOW_SERVICE = new InjectionToken('WINDOW_SERVICE');
+export const WINDOW_SERVICE = new InjectionToken<WindowService>('WINDOW_SERVICE');
 
 export function checkBrowserEnvironmentFactory(
-  platformService: PlatformService,
+  platformid: object,
 ): WindowService {
-  if (platformService.isBrowser) {
+  if (isPlatformBrowser(platformid)) {
     return new WindowService(window);
   } else {
     throw new Error('Not in Browser Environment');
   }
 }
 
+@Injectable(
+  {
+    providedIn: 'root'
+  }
+)
+export class DummyService {
+  public shouldWork(): boolean {
+    return true;
+  }
+}
+
+@Injectable(
+  {
+    providedIn: 'root',
+    useFactory: checkBrowserEnvironmentFactory,
+    deps: [PLATFORM_ID]
+  }
+)
 export class WindowService {
-  constructor(private nativeWindow: Window) {}
+  constructor(private nativeWindow) { }
 
   get window(): Window {
     return this.nativeWindow;
