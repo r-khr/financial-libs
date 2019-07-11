@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { WindowService } from '@fcf/window';
+import { WindowService } from '@fcf/f-window';
 import { ConfigService } from '@fcf/config';
 import { map } from 'rxjs/operators';
 

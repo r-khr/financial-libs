@@ -21,13 +21,7 @@
     "paths": {
       "@fcf/*": [
         "dist/*"
-      ],
-      "config": [
-        "dist/config"
-      ],
-      "config/*": [
-        "dist/config/*"
       ]
     }
-  },
+  }
 }

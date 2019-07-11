@@ -1,7 +1,5 @@
-import { InjectionToken, Injectable, PLATFORM_ID } from '@angular/core';
+import { Injectable, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-
-export const WINDOW_SERVICE = new InjectionToken<WindowService>('WINDOW_SERVICE');
 
 export function checkBrowserEnvironmentFactory(
   platformid: object,
@@ -13,26 +11,13 @@ export function checkBrowserEnvironmentFactory(
   }
 }
 
-@Injectable(
-  {
-    providedIn: 'root'
-  }
-)
-export class DummyService {
-  public shouldWork(): boolean {
-    return true;
-  }
-}
-
-@Injectable(
-  {
-    providedIn: 'root',
-    useFactory: checkBrowserEnvironmentFactory,
-    deps: [PLATFORM_ID]
-  }
-)
+@Injectable({
+  providedIn: 'root',
+  useFactory: checkBrowserEnvironmentFactory,
+  deps: [PLATFORM_ID],
+})
 export class WindowService {
-  constructor(private nativeWindow) { }
+  constructor(private nativeWindow) {}
 
   get window(): Window {
     return this.nativeWindow;
